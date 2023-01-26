@@ -4,9 +4,9 @@ import { Icon } from "@rneui/themed";
 
 const Header = () => {
    return (
-      <View className="bg-dark py-10 px-5">
-         <View className="flex flex-row items-center justify-between py-3">
-            <Text className="text-mid text-xs mb-2">Welcome back,</Text>
+      <View className="bg-dark pt-10 pb-5 px-5">
+         <View className="flex flex-row items-center justify-between py-2">
+            <Text className="text-mid text-xs">Welcome back,</Text>
             <View className="flex flex-row">
                <Icon name={"bell"} type={"entypo"} color={"#FAFAFA"} />
                <Icon

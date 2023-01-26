@@ -1,19 +1,20 @@
 import {
-   ScrollView,
-   Text,
-   View,
    SafeAreaView,
+   ScrollView,
+   StyleSheet,
+   Text,
    TouchableOpacity,
+   View,
 } from "react-native";
 import React from "react";
-import LatestMoviesCard from "./LatestMoviesCard";
+import TopRatedCard from "./TopRatedCard";
 
-const LatestMoviesRow = () => {
+const TopRatedRow = () => {
    return (
-      <SafeAreaView className="bg-dark py-10">
+      <SafeAreaView className="bg-dark py-3">
          <View className="flex flex-row items-center justify-between">
             <Text className="text-light font-bold text-2xl mx-4">
-               Latest Movies
+               Top Rated
             </Text>
             <TouchableOpacity className="text-brand font-bold text-md mx-4">
                <Text className="text-brand font-bold text-md">See all</Text>
@@ -24,12 +25,15 @@ const LatestMoviesRow = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
          >
-            <LatestMoviesCard />
-            <LatestMoviesCard />
-            <LatestMoviesCard />
+            <TopRatedCard />
+            <TopRatedCard />
+            <TopRatedCard />
+            <TopRatedCard />
          </ScrollView>
       </SafeAreaView>
    );
 };
 
-export default LatestMoviesRow;
+export default TopRatedRow;
+
+const styles = StyleSheet.create({});

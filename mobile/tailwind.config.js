@@ -11,6 +11,7 @@ module.exports = {
          dark: "#0F172A",
          mid: "#ABB8C9",
          light: "#FAFAFA",
+         brandLight: "#cfffdd",
       },
       fontFamily: {
          sans: "Open Sans, sans-serif",

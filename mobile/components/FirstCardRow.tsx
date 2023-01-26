@@ -6,9 +6,9 @@ const FirstCardRow = () => {
    return (
       <ScrollView
          contentContainerStyle={{ paddingHorizontal: 15, paddingTop: 10 }}
-         className="bg-dark w-full h-full "
+         className="bg-dark"
          horizontal
-         showsHorizontalScrollIndicator={true}
+         showsHorizontalScrollIndicator={false}
       >
          <FirstCard />
          <FirstCard />
@@ -18,5 +18,3 @@ const FirstCardRow = () => {
 };
 
 export default FirstCardRow;
-
-const styles = StyleSheet.create({});

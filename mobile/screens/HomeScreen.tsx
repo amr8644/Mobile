@@ -1,8 +1,10 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import * as React from "react";
 import FirstCardRow from "../components/FirstCardRow";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
+import LatestMoviesRow from "../components/LatestMoviesRow";
+import TopRatedRow from "../components/TopRatedRow";
 
 const HomeScreen = () => {
    const navi = useNavigation();
@@ -13,10 +15,12 @@ const HomeScreen = () => {
       });
    });
    return (
-      <SafeAreaView>
+      <ScrollView>
          <Header />
          <FirstCardRow />
-      </SafeAreaView>
+         <LatestMoviesRow />
+         <TopRatedRow />
+      </ScrollView>
    );
 };
 
