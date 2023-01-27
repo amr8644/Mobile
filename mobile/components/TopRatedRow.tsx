@@ -11,7 +11,7 @@ import TopRatedCard from "./TopRatedCard";
 
 const TopRatedRow = () => {
    return (
-      <SafeAreaView className="bg-dark py-3">
+      <SafeAreaView className="bg-dark py-5 pb-10">
          <View className="flex flex-row items-center justify-between">
             <Text className="text-light font-bold text-2xl mx-4">
                Top Rated

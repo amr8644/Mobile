@@ -25,7 +25,3 @@ const HomeScreen = ({ navigation }: any) => {
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({
-   container: {},
-});

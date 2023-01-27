@@ -8,7 +8,7 @@ const LatestMoviesCard = () => {
 
    React.useEffect(() => {
       const getMovies = async () => {
-         const response = await instance.get(requests.fetchTrending);
+         const response = await instance.get(requests.fetchActionMovies);
          setDB(response.data.results);
          return response;
       };
@@ -18,22 +18,21 @@ const LatestMoviesCard = () => {
    return (
       <>
          {db?.map((e: any) => {
-            // console.log(e);
-
             return (
                <View
                   key={e?.id}
-                  className="mr-2 w-44 h-68 rounded-2xl flex items-center justify-center flex-col mx-1"
+                  className="mr-2 w-44 h-68  rounded-2xl flex items-center justify-center flex-col mx-1"
                >
                   <Image
                      source={{
                         uri: `https://image.tmdb.org/t/p/original/${e?.poster_path}`,
                      }}
-                     className="w-44 h-58  rounded-xl"
+                     style={{ width: 176, height: 224 }}
+                     className="max-h-56  rounded-xl"
                   />
 
                   {/* <Text className="text-brand absolute top-10 right-2 text-xs bg-brandLight rounded-full px-[6px] py-[1px]">
-                     {e?.media_type == "tv" ? "Series" : "Movie"}
+                     {"Movie"}
                   </Text> */}
 
                   <View className="flex self-start">

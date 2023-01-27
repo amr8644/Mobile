@@ -10,10 +10,10 @@ import LatestMoviesCard from "./LatestMoviesCard";
 
 const LatestMoviesRow = () => {
    return (
-      <SafeAreaView className="bg-dark py-10">
+      <SafeAreaView className="bg-dark py-5">
          <View className="flex flex-row items-center justify-between">
             <Text className="text-light font-bold text-2xl mx-4">
-               Latest Shows
+               Action Movies
             </Text>
             <TouchableOpacity className="text-brand font-bold text-md mx-4">
                <Text className="text-brand font-bold text-md">See all</Text>
