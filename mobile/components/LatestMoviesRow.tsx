@@ -13,7 +13,7 @@ const LatestMoviesRow = () => {
       <SafeAreaView className="bg-dark py-10">
          <View className="flex flex-row items-center justify-between">
             <Text className="text-light font-bold text-2xl mx-4">
-               Latest Movies
+               Latest Shows
             </Text>
             <TouchableOpacity className="text-brand font-bold text-md mx-4">
                <Text className="text-brand font-bold text-md">See all</Text>
@@ -24,8 +24,6 @@ const LatestMoviesRow = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
          >
-            <LatestMoviesCard />
-            <LatestMoviesCard />
             <LatestMoviesCard />
          </ScrollView>
       </SafeAreaView>

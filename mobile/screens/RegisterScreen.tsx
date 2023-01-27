@@ -2,7 +2,7 @@ import * as React from "react";
 import { View, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { Button, Input } from "@rneui/base";
 
-const RegisterScreen = ({ navigation }: any) => {
+const RegisterScreen = () => {
    const [username, setUsername] = React.useState("");
    const [email, setEmail] = React.useState("");
    const [password, setPassword] = React.useState("");

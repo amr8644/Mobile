@@ -12,6 +12,7 @@ module.exports = {
          mid: "#ABB8C9",
          light: "#FAFAFA",
          brandLight: "#cfffdd",
+         black: "#0F172A",
       },
       fontFamily: {
          sans: "Open Sans, sans-serif",

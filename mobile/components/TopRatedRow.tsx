@@ -26,9 +26,6 @@ const TopRatedRow = () => {
             showsHorizontalScrollIndicator={false}
          >
             <TopRatedCard />
-            <TopRatedCard />
-            <TopRatedCard />
-            <TopRatedCard />
          </ScrollView>
       </SafeAreaView>
    );

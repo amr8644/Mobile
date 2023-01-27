@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import FirstCard from "./FirstCard";
 
-const FirstCardRow = () => {
+const FirstCardRow = ({ navigation }: any) => {
    return (
       <ScrollView
          contentContainerStyle={{ paddingHorizontal: 15, paddingTop: 10 }}
@@ -10,9 +10,7 @@ const FirstCardRow = () => {
          horizontal
          showsHorizontalScrollIndicator={false}
       >
-         <FirstCard />
-         <FirstCard />
-         <FirstCard />
+         <FirstCard navigation={navigation} />
       </ScrollView>
    );
 };

@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import LatestMoviesRow from "../components/LatestMoviesRow";
 import TopRatedRow from "../components/TopRatedRow";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: any) => {
    const navi = useNavigation();
 
    React.useLayoutEffect(() => {
@@ -17,7 +17,7 @@ const HomeScreen = () => {
    return (
       <ScrollView>
          <Header />
-         <FirstCardRow />
+         <FirstCardRow navigation={navigation} />
          <LatestMoviesRow />
          <TopRatedRow />
       </ScrollView>
