@@ -2,13 +2,18 @@
 import * as React from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
+import { View, Text, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./screens/LoginScreen";
 
-SplashScreen.preventAutoHideAsync();
-const Stack = createNativeStackNavigator();
+// SplashScreen.preventAutoHideAsync();
 
+export type StackParamsList = {
+   Login: undefined;
+};
+
+const Stack = createNativeStackNavigator<StackParamsList>();
 const globalScreenOptions = {
    headerStyle: { backgroundColor: "#006AFF" },
    headerTitleStyle: { color: "white" },
@@ -30,14 +35,12 @@ export default function App() {
       return null;
    }
    return (
-      <NavigationContainer>
-         <Stack.Navigator screenOptions={globalScreenOptions}>
-            <Stack.Screen
-               name="
-            Login"
-               component={LoginScreen}
-            />
-         </Stack.Navigator>
-      </NavigationContainer>
+      <SafeAreaView>
+         <NavigationContainer>
+            <Stack.Navigator screenOptions={globalScreenOptions}>
+               <Stack.Screen name="Login" component={LoginScreen} />
+            </Stack.Navigator>
+         </NavigationContainer>
+      </SafeAreaView>
    );
 }
