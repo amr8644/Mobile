@@ -1,32 +1,62 @@
 // @ts-nocheck
 import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
 import { Button, Image, Input } from "@rneui/themed";
-import { StatusBar } from "expo-status-bar";
-const LoginScreen = () => {
+
+const LoginScreen = ({ navigation }: any) => {
+   const [emailAddress, setEmailAddress] = React.useState("");
+   const [password, setPassword] = React.useState("");
+
    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-         <Text>LoginScreen</Text>
+      <KeyboardAvoidingView
+         behavior="padding"
+         style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+         }}
+      >
+         {/* <Image
+            source={{
+               uri: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Fso%2Fmessenger-logo&psig=AOvVaw2HCUap5wNhSCxwR5aKO2th&ust=1675090727555000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCNjGqbCF7fwCFQAAAAAdAAAAABAE",
+            }}
+            style={{ width: 200, height: 200 }}
+         /> */}
          <View style={styles.inputContainer}>
-            <Input
-               placeholder="Email"
-               //    secureTextEntry={true}
-               autoFocus
-               type="email"
-            />
+            <Input placeholder="Username" autoFocus type="text" />
             <Input
                placeholder="Password"
                secureTextEntry={true}
                type="password"
             />
-            <Button title="Login" />
+            <Button
+               title="Login"
+               containerStyle={styles.buttonStyle}
+               buttonStyle={{ backgroundColor: "#0084ff" }}
+            />
+            <Button
+               onPress={() => navigation.navigate("Register")}
+               title="Register"
+               type="outline"
+               containerStyle={styles.buttonStyle}
+               titleStyle={{ color: "#0084ff" }}
+            />
          </View>
-      </View>
+      </KeyboardAvoidingView>
    );
 };
 
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-   inputContainer: {},
+   inputContainer: {
+      width: 400,
+      alignItems: "center",
+      justifyContent: "center",
+   },
+   buttonStyle: {
+      width: 200,
+      marginVertical: 10,
+      borderColor: "#0084ff",
+   },
 });
