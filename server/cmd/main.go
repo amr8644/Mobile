@@ -9,9 +9,11 @@ import (
 
 
 func main() {
-	db.ConnectToDB()
+	
+	db.ConnectToDB() 
 	server := api.NewServer(":8000")
 	log.Fatal(server.StartServer())
+
 }
 
 

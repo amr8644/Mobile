@@ -19,10 +19,10 @@ INSERT INTO users (
 `
 
 type CreateUserParams struct {
-	Fullname string `json:"fullname"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Fullname sql.NullString `json:"fullname"`
+	Username sql.NullString `json:"username"`
+	Email    sql.NullString `json:"email"`
+	Password sql.NullString `json:"password"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Result, error) {
@@ -32,4 +32,12 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Res
 		arg.Email,
 		arg.Password,
 	)
+}
+
+const getUser = `-- name: GetUser :execresult
+SELECT id, fullname, email, username, password, profile, created_at FROM users WHERE id = ?
+`
+
+func (q *Queries) GetUser(ctx context.Context, id int32) (sql.Result, error) {
+	return q.db.ExecContext(ctx, getUser, id)
 }

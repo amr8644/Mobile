@@ -10,10 +10,10 @@ import (
 
 type Users struct {
 	ID        int32          `json:"id"`
-	Fullname  string `json:"fullname"`
-	Email     string `json:"email"`
-	Username  string `json:"username"`
-	Password  string `json:"password"`
-	Profile   string `json:"profile"`
+	Fullname  sql.NullString `json:"fullname"`
+	Email     sql.NullString `json:"email"`
+	Username  sql.NullString `json:"username"`
+	Password  sql.NullString `json:"password"`
+	Profile   sql.NullString `json:"profile"`
 	CreatedAt sql.NullTime   `json:"created_at"`
 }

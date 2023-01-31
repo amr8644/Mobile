@@ -4,3 +4,6 @@ INSERT INTO users (
 ) VALUES (
   ?, ?, ?, ?
 );
+
+-- name: GetUser :execresult
+SELECT * FROM users WHERE id = ?;
