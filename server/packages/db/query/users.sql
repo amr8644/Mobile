@@ -5,5 +5,6 @@ INSERT INTO users (
    ?, ?, ?
 );
 
--- name: LoginUser :execresult
-SELECT username, password FROM users WHERE username = ?;
+-- name: LoginUser :one
+SELECT * FROM users
+WHERE username = ?;

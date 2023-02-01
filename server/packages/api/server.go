@@ -7,8 +7,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// var ctx = context.Background()
-
 type Server struct {
 	Address string
 }
@@ -22,9 +20,11 @@ func NewServer(Address string) *Server {
 func (s *Server) StartServer() error {
 
 	router := mux.NewRouter()
+	
 	// Auth routes
 	router.HandleFunc("/register",HTTPHandler(s.RegisterUser)).Methods("POST")
 	router.HandleFunc("/login",HTTPHandler(s.LoginUser)).Methods("POST")
+	router.HandleFunc("/logout",s.Logout).Methods("POST")
 
 	// Messages Routes
 	// Channels Routes

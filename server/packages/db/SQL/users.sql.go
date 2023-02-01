@@ -28,15 +28,20 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Res
 	return q.db.ExecContext(ctx, createUser, arg.Username, arg.Email, arg.Password)
 }
 
-const loginUser = `-- name: LoginUser :execresult
-SELECT username, password FROM users WHERE username = ?
+const loginUser = `-- name: LoginUser :one
+SELECT id, email, username, password, created_at FROM users
+WHERE username = ?
 `
 
-type LoginUserRow struct {
-	Username sql.NullString `json:"username"`
-	Password sql.NullString `json:"password"`
-}
-
-func (q *Queries) LoginUser(ctx context.Context, username sql.NullString) (sql.Result, error) {
-	return q.db.ExecContext(ctx, loginUser, username)
+func (q *Queries) LoginUser(ctx context.Context, username sql.NullString) (Users, error) {
+	row := q.db.QueryRowContext(ctx, loginUser, username)
+	var i Users
+	err := row.Scan(
+		&i.ID,
+		&i.Email,
+		&i.Username,
+		&i.Password,
+		&i.CreatedAt,
+	)
+	return i, err
 }
