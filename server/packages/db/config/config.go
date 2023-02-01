@@ -4,15 +4,15 @@ import (
 	"database/sql"
 	"log"
 
-	_ "github.com/lib/pq"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 
 func ConnectToDB() (db *sql.DB)  {
 	log.Println("Connecting to MySQL DB...")
 	
-	connstr := "postgresql://postgres:4oAYOA1LxU73TkSQYNih@containers-us-west-166.railway.app:7945/railway"
-	db, err := sql.Open("postgres", connstr)
+	connstr := "root:80aLOv9gIY0UIZrVXM3d@tcp(containers-us-west-155.railway.app:5443)/railway"
+	db, err := sql.Open("mysql", connstr)
 
     if err != nil {
         log.Fatalf("failed to connect: %v", err)

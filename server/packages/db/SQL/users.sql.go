@@ -12,32 +12,31 @@ import (
 
 const createUser = `-- name: CreateUser :execresult
 INSERT INTO users (
-  fullname, username, email, password
+  username, email, password
 ) VALUES (
-  ?, ?, ?, ?
+   ?, ?, ?
 )
 `
 
 type CreateUserParams struct {
-	Fullname sql.NullString `json:"fullname"`
 	Username sql.NullString `json:"username"`
 	Email    sql.NullString `json:"email"`
 	Password sql.NullString `json:"password"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Result, error) {
-	return q.db.ExecContext(ctx, createUser,
-		arg.Fullname,
-		arg.Username,
-		arg.Email,
-		arg.Password,
-	)
+	return q.db.ExecContext(ctx, createUser, arg.Username, arg.Email, arg.Password)
 }
 
-const getUser = `-- name: GetUser :execresult
-SELECT id, fullname, email, username, password, profile, created_at FROM users WHERE id = ?
+const loginUser = `-- name: LoginUser :execresult
+SELECT username, password FROM users WHERE username = ?
 `
 
-func (q *Queries) GetUser(ctx context.Context, id int32) (sql.Result, error) {
-	return q.db.ExecContext(ctx, getUser, id)
+type LoginUserRow struct {
+	Username sql.NullString `json:"username"`
+	Password sql.NullString `json:"password"`
+}
+
+func (q *Queries) LoginUser(ctx context.Context, username sql.NullString) (sql.Result, error) {
+	return q.db.ExecContext(ctx, loginUser, username)
 }

@@ -1,9 +1,9 @@
 -- name: CreateUser :execresult
 INSERT INTO users (
-  fullname, username, email, password
+  username, email, password
 ) VALUES (
-  ?, ?, ?, ?
+   ?, ?, ?
 );
 
--- name: GetUser :execresult
-SELECT * FROM users WHERE id = ?;
+-- name: LoginUser :execresult
+SELECT username, password FROM users WHERE username = ?;

@@ -1,6 +1,6 @@
 version: "1"
 packages:
-   - engine: "postgresql"
+   - engine: "mysql"
      name: "db"
      path: "./packages/db/SQL"
      queries: "./packages/db/query/users.sql"

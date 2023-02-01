@@ -3,6 +3,8 @@ package api
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -14,30 +16,62 @@ import (
 
 func (s *Server) RegisterUser(w http.ResponseWriter, r *http.Request) error {
 
+	// Create a new User struct
+	var u db.Users
 	quries := db.New(conn.ConnectToDB())
+	
+	// Decode the request body then put it inside the struct
+	err := json.NewDecoder(r.Body).Decode(&u)
 
+	// Return an error if failed
+    if err != nil {
+        utils.WriteJSON(w, http.StatusBadRequest,APIError{Err: "Bad Request",Status: http.StatusBadRequest })
+    }
+
+	// Hash the password. Return error if failed
+	hashed_password, err := utils.HashPassword(u.Password.String)
+	
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	// Add to database
 	user,err := quries.CreateUser(context.Background(),db.CreateUserParams{
-		Fullname: sql.NullString{String: "Amr",Valid: true},
-		Username: sql.NullString{String: "amr8644",Valid: true},
-		Email: sql.NullString{String: "ammd@gmail.com",Valid: true},
-		Password: sql.NullString{String: "22222",Valid: true},
+		Username: sql.NullString{String: u.Username.String,Valid: true},
+		Email: sql.NullString{String: u.Email.String,Valid: true},
+		Password: sql.NullString{String: hashed_password,Valid: true},
 	})
 
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+
+	return utils.WriteJSON(w, http.StatusOK, user)
+}
+
+func (s *Server) LoginUser(w http.ResponseWriter, r *http.Request) error {
+
+	type User struct{
+		Username sql.NullString
+	}
+
+	var u User
+	quries := db.New(conn.ConnectToDB())
 	
-	insertedAuthorID, err := user.LastInsertId()
-	if err != nil {
-		return err
-	}
-	log.Println(insertedAuthorID)
+	err := json.NewDecoder(r.Body).Decode(&u)
 
-	// get the author we just inserted
-	fetchedUser, err := quries.GetUser(context.Background(), int32(insertedAuthorID))
+    if err != nil {
+        utils.WriteJSON(w, http.StatusBadRequest,APIError{Err: "Bad Request",Status: http.StatusBadRequest })
+    }
+
+	// utils.CheckPasswordHash()
+	user,err := quries.LoginUser(context.Background(),sql.NullString{String: u.Username.String,Valid: true})
+
+	fmt.Println(user)
+
 	if err != nil {
-		return err
+		log.Fatal(err.Error())
 	}
 
-	return utils.WriteJSON(w, http.StatusOK, fetchedUser)
+	return utils.WriteJSON(w, http.StatusOK, user)
 }
