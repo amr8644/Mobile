@@ -6,14 +6,14 @@ import { API_URL } from "../api/url";
 
 const RegisterScreen = () => {
    const [username, setUsername] = React.useState("");
-   const [emailAddress, setEmailAddress] = React.useState("");
+   const [email, setEmail] = React.useState("");
    const [password, setPassword] = React.useState("");
 
    const registerUser = async () => {
       const payload = {
-         emailAddress,
-         username,
-         password,
+         Username: { String: username, Valid: true },
+         Email: { String: email, Valid: true },
+         Password: { String: password, Valid: true },
       };
       try {
          const response = await fetch(`${API_URL}/register`, {
@@ -24,17 +24,17 @@ const RegisterScreen = () => {
             headers: {
                "Content-Type": "application/json",
             },
-            body: {
-               username: username,
-               email: emailAddress,
-               password: password,
-            },
+            body: JSON.stringify(payload),
          });
+
+         navigation.replace("Home");
+         
          return response;
       } catch (error) {
          console.log(error);
       }
    };
+
    return (
       <KeyboardAvoidingView
          behavior="padding"
@@ -54,8 +54,8 @@ const RegisterScreen = () => {
             <Input
                placeholder="Email"
                type="email"
-               value={emailAddress}
-               onChangeText={(e: any) => setEmailAddress(e)}
+               value={email}
+               onChangeText={(e: any) => setEmail(e)}
             />
             <Input
                placeholder="Password"

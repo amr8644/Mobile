@@ -76,7 +76,6 @@ func (s *Server) RegisterUser(w http.ResponseWriter, r *http.Request) error {
 }
 
 func (s *Server) LoginUser(w http.ResponseWriter, r *http.Request) error {
-
 	
 	var u User
 	quries := db.New(conn.ConnectToDB())
@@ -93,7 +92,7 @@ func (s *Server) LoginUser(w http.ResponseWriter, r *http.Request) error {
 	session, _ := store.Get(r, u.Username.String)
 	
 	if err != nil {
-		log.Println(APIError{Err: err.Error(),Status: http.StatusUnauthorized })
+		log.Println(APIError{Err: err.Error(),Status: http.StatusNotFound })
 		return utils.WriteJSON(w, http.StatusUnauthorized,APIError{Err: err.Error(),Status: http.StatusUnauthorized })
 	}
 
@@ -108,6 +107,8 @@ func (s *Server) LoginUser(w http.ResponseWriter, r *http.Request) error {
 	// Set some session values.
 	session.Values["authenticated"] = true
 	session.Values[u.Username.String] = u.Username.String
+	log.Println("Logging In")
+	log.Println("Redirecting...")
 	// Save it before we write to the response/return from the handler.
 	session.Save(r, w)
 
@@ -126,5 +127,7 @@ func (s *Server) Logout(w http.ResponseWriter, r *http.Request) {
 
     // Revoke users authentication
     session.Values["authenticated"] = false
+	log.Println("Logging Out")
+	log.Println("Redirecting...")
     session.Save(r, w)
 }

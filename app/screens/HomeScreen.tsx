@@ -1,8 +1,30 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Card, Avatar } from "@rneui/themed";
+import { API_URL } from "../api/url";
+import { Button } from "@rneui/base";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: any) => {
+   const logoutUser = async () => {
+      try {
+         const response = await fetch(`${API_URL}/logout`, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+               "Content-Type": "application/json",
+            },
+         });
+         console.log(response);
+
+         navigation.replace("Login");
+
+         return response;
+      } catch (error) {
+         console.log(error);
+      }
+   };
    return (
       <View>
          <Card containerStyle={{ width: "100%", height: 100 }}>
@@ -15,6 +37,7 @@ const HomeScreen = () => {
                   }}
                />
                <Text>Amr Ashebo</Text>
+               <Button title={"Logout"} onPress={logoutUser} />
             </View>
          </Card>
       </View>
