@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import React from "react";
-import { Input, Button, Image } from "@rneui/themed";
+import { Input, Button } from "@rneui/themed";
 import { API_URL } from "../api/url";
 
 const RegisterScreen = () => {
@@ -20,7 +20,7 @@ const RegisterScreen = () => {
             method: "POST",
             mode: "cors",
             cache: "no-cache",
-            credentials: "same-origin",
+            credentials: "include",
             headers: {
                "Content-Type": "application/json",
             },
@@ -28,12 +28,18 @@ const RegisterScreen = () => {
          });
 
          navigation.replace("Home");
-         
+
          return response;
       } catch (error) {
          console.log(error);
       }
    };
+
+   React.useLayoutEffect(() => {
+      navigation.setOptions({
+         headerShown: false,
+      });
+   }, []);
 
    return (
       <KeyboardAvoidingView
@@ -87,5 +93,6 @@ const styles = StyleSheet.create({
       width: 200,
       marginVertical: 10,
       borderColor: "#0084ff",
+      borderRadius: 10,
    },
 });

@@ -26,20 +26,6 @@ type User struct {
 	Password  sql.NullString `json:"password"`
 }
 
-func Auth(w http.ResponseWriter, r *http.Request) {
-    session, _ := store.Get(r, "cookie-name")
-
-    // Check if user is authenticated
-    if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
-        http.Error(w, "Forbidden", http.StatusForbidden)
-        return
-    }
-
-    // Print secret message
-    fmt.Fprintln(w, "The cake is a lie!")
-}
-
-
 func (s *Server) RegisterUser(w http.ResponseWriter, r *http.Request) error {
 
 	// Create a new User struct
@@ -78,9 +64,11 @@ func (s *Server) RegisterUser(w http.ResponseWriter, r *http.Request) error {
 func (s *Server) LoginUser(w http.ResponseWriter, r *http.Request) error {
 	
 	var u User
+	session, _ := store.Get(r, "super-secret-key")
 	quries := db.New(conn.ConnectToDB())
 	
 	err := json.NewDecoder(r.Body).Decode(&u)
+	fmt.Println(u)
 	
     if err != nil {
 		log.Println(APIError{Err: "Bad Request",Status: http.StatusBadRequest })
@@ -89,7 +77,6 @@ func (s *Server) LoginUser(w http.ResponseWriter, r *http.Request) error {
 	
 	// Get Username and Password
 	user,err := quries.LoginUser(context.Background(),sql.NullString{String: u.Username.String,Valid: true})
-	session, _ := store.Get(r, u.Username.String)
 	
 	if err != nil {
 		log.Println(APIError{Err: err.Error(),Status: http.StatusNotFound })
@@ -106,7 +93,7 @@ func (s *Server) LoginUser(w http.ResponseWriter, r *http.Request) error {
 
 	// Set some session values.
 	session.Values["authenticated"] = true
-	session.Values[u.Username.String] = u.Username.String
+	// session.Values[u.Username.String] = u.Username.String
 	log.Println("Logging In")
 	log.Println("Redirecting...")
 	// Save it before we write to the response/return from the handler.
@@ -115,12 +102,13 @@ func (s *Server) LoginUser(w http.ResponseWriter, r *http.Request) error {
 	return utils.WriteJSON(w, http.StatusOK, user)
 }
 
-func (s *Server) Logout(w http.ResponseWriter, r *http.Request) {
+func (s *Server) Logout(w http.ResponseWriter, r *http.Request) error {
 	
 	var u User
 	err := json.NewDecoder(r.Body).Decode(&u)
 	if err != nil {
 		log.Println(APIError{Err: "Bad Request",Status: http.StatusBadRequest })
+		return utils.WriteJSON(w, http.StatusOK, APIError{Err: "Bad Request",Status: http.StatusBadRequest })
     }
 
     session, _ := store.Get(r, u.Username.String)
@@ -130,4 +118,5 @@ func (s *Server) Logout(w http.ResponseWriter, r *http.Request) {
 	log.Println("Logging Out")
 	log.Println("Redirecting...")
     session.Save(r, w)
+	return utils.WriteJSON(w, http.StatusOK, u)
 }

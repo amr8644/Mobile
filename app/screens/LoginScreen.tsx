@@ -1,8 +1,17 @@
 // @ts-nocheck
 import * as React from "react";
-import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
+import {
+   View,
+   StyleSheet,
+   KeyboardAvoidingView,
+   Text,
+   Dimensions,
+} from "react-native";
 import { Button, Image, Input } from "@rneui/themed";
 import { API_URL } from "../api/url";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const LoginScreen = ({ navigation }: any) => {
    const [username, setUsername] = React.useState("");
@@ -19,22 +28,28 @@ const LoginScreen = ({ navigation }: any) => {
             method: "POST",
             mode: "cors",
             cache: "no-cache",
-            credentials: "same-origin",
+            credentials: "include",
             headers: {
                "Content-Type": "application/json",
             },
             body: JSON.stringify(payload),
          });
 
-         if (response.status === 401) setIsError("Invalid Credentials");
-
-         navigation.replace("Home");
+         console.log(response.status);
+         if (response.status === 401) {
+            setIsError("Invalid Credentials");
+         }
 
          return response;
       } catch (error) {
          console.log(error);
       }
    };
+   React.useLayoutEffect(() => {
+      navigation.setOptions({
+         headerShown: false,
+      });
+   }, []);
 
    return (
       <KeyboardAvoidingView
@@ -45,13 +60,16 @@ const LoginScreen = ({ navigation }: any) => {
             justifyContent: "center",
          }}
       >
-         {/* <Image
-            source={{
-               uri: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Fso%2Fmessenger-logo&psig=AOvVaw2HCUap5wNhSCxwR5aKO2th&ust=1675090727555000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCNjGqbCF7fwCFQAAAAAdAAAAABAE",
-            }}
-            style={{ width: 200, height: 200 }}
-         /> */}
          <View style={styles.inputContainer}>
+            <Text
+               style={{
+                  fontSize: 30,
+                  fontWeight: "600",
+                  alignSelf: "start",
+               }}
+            >
+               Login
+            </Text>
             <Input
                placeholder="Username"
                autoFocus
@@ -90,13 +108,14 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
    inputContainer: {
-      width: 300,
+      width: windowWidth * 0.8,
       alignItems: "center",
       justifyContent: "center",
    },
    buttonStyle: {
-      width: 200,
+      width: windowWidth * 0.7,
       marginVertical: 10,
       borderColor: "#0084ff",
+      borderRadius: 10,
    },
 });

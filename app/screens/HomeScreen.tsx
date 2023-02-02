@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { Card, Avatar } from "@rneui/themed";
+import { Avatar } from "@rneui/themed";
 import { API_URL } from "../api/url";
-import { Button } from "@rneui/base";
+import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
+import CustomListItem from "../components/CustomListItem";
 
 const HomeScreen = ({ navigation }: any) => {
    const logoutUser = async () => {
@@ -25,32 +26,52 @@ const HomeScreen = ({ navigation }: any) => {
          console.log(error);
       }
    };
-   return (
-      <View>
-         <Card containerStyle={{ width: "100%", height: 100 }}>
-            <View style={styles.profileContainer}>
-               <Avatar
-                  size={48}
-                  rounded
-                  source={{
-                     uri: "https://cdn.pixabay.com/photo/2020/09/18/05/58/lights-5580916__340.jpg",
-                  }}
-               />
-               <Text>Amr Ashebo</Text>
-               <Button title={"Logout"} onPress={logoutUser} />
+
+   React.useLayoutEffect(() => {
+      navigation.setOptions({
+         title: "iChat",
+         headerStyle: { backgroundColor: "#fff" },
+         headerTitleStyle: { color: "black" },
+         headerTintColor: "black",
+         headerLeft: () => (
+            <View style={{ marginLeft: 20 }}>
+               <TouchableOpacity onPress={logoutUser}>
+                  <Avatar
+                     rounded
+                     source={{
+                        uri: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600",
+                     }}
+                  />
+               </TouchableOpacity>
             </View>
-         </Card>
-      </View>
+         ),
+         headerRight: () => {
+            <View
+               style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  width: 80,
+                  marginRight: 20,
+               }}
+            >
+               <TouchableOpacity onPress={() => navigation.navigate("AddChat")}>
+                  <AntDesign name="camerao" size={24} color="black" />
+               </TouchableOpacity>
+               <TouchableOpacity>
+                  <SimpleLineIcons name="pencil" size={24} color="black" />
+               </TouchableOpacity>
+            </View>;
+         },
+      });
+   }, []);
+
+   return (
+      <SafeAreaView>
+         <ScrollView>
+            <CustomListItem />
+         </ScrollView>
+      </SafeAreaView>
    );
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({
-   profileContainer: {
-      // flex: 1,
-      width: 100,
-      flexDirection: "row",
-      //   height: "100%",
-   },
-});
