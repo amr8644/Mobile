@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -68,7 +67,6 @@ func (s *Server) LoginUser(w http.ResponseWriter, r *http.Request) error {
 	quries := db.New(conn.ConnectToDB())
 	
 	err := json.NewDecoder(r.Body).Decode(&u)
-	fmt.Println(u)
 	
     if err != nil {
 		log.Println(APIError{Err: "Bad Request",Status: http.StatusBadRequest })
@@ -111,7 +109,7 @@ func (s *Server) Logout(w http.ResponseWriter, r *http.Request) error {
 		return utils.WriteJSON(w, http.StatusOK, APIError{Err: "Bad Request",Status: http.StatusBadRequest })
     }
 
-    session, _ := store.Get(r, u.Username.String)
+    session, _ := store.Get(r, "super-secret-key")
 
     // Revoke users authentication
     session.Values["authenticated"] = false

@@ -1,7 +1,6 @@
 package api
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 	"strings"
@@ -17,14 +16,8 @@ func Authtication() mux.MiddlewareFunc {
 
     return func(h http.Handler) http.Handler {
         return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-            var u User
-	        // Decode the request body then put it inside the struct
-            err := json.NewDecoder(r.Body).Decode(&u)
-            // Return an error if failed
-            if err != nil {
-                utils.WriteJSON(w, http.StatusBadRequest,APIError{Err: "Bad Request",Status: http.StatusBadRequest })
-            }
-            session, _ := store.Get(r, u.Username.String)
+      
+            session, _ := store.Get(r,"super-secret-key")
         
             _, ok := session.Values["super-secret-key"]
             if strings.Split(r.URL.Path,"/")[1] == "login" || strings.Split(r.URL.Path,"/")[1] == "register" || strings.Split(r.URL.Path,"/")[1] == "logout"{
@@ -56,7 +49,6 @@ func Logging() mux.MiddlewareFunc {
             // Call the next middleware/handler in chain
             h.ServeHTTP(w, r)
         })
-    }
-   
+    }   
 }
 
