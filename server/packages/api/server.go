@@ -32,7 +32,7 @@ func (s *Server) StartServer() error {
 	
 	// Messages Routes
 	// Channels Routes
-	router.HandleFunc("/home",HTTPHandler(s.GetAllChannels)).Methods("GET")
+	router.HandleFunc("/home",s.GetAllChannels).Methods("GET")
 	router.HandleFunc("/ws",func(w http.ResponseWriter, r *http.Request) {
 		ServeWS(pool,w,r)
 	})

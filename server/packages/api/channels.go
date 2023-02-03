@@ -1,15 +1,17 @@
 package api
 
 import (
+	"html/template"
 	"net/http"
-
-	"github.com/open-ai/server/packages/utils"
+	"path/filepath"
 )
 
-func (s *Server) GetAllChannels(w http.ResponseWriter, r *http.Request) error {
-	
-	http.FileServer(http.Dir("../../static/index.html"))
+func (s *Server) GetAllChannels(w http.ResponseWriter, r *http.Request) {
+	lp := filepath.Join("static", "index.html")
+	fp := filepath.Join("static", filepath.Clean(r.URL.Path))
 
-	return utils.WriteJSON(w,http.StatusOK,"Hello World")
+	tmpl, _ := template.ParseFiles(lp, fp)
+	tmpl.ExecuteTemplate(w, "layout", nil)
+
 }
 

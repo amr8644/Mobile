@@ -93,14 +93,14 @@ func (pool *Pool)Start(){
 		case client := <-pool.Register:
 			pool.Clients[client] = true
 			fmt.Println("Size",len(pool.Clients))
-			for client := range pool.Clients {				fmt.Println(client)
+			for client := range pool.Clients {				
 				client.Conn.WriteJSON(Message{Type: 1,Body: "New user joind"})
 				break
 			}
 		case client := <- pool.UnRegister:
 			delete(pool.Clients,client)
 			fmt.Println("Size",len(pool.Clients))
-			for client := range pool.Clients {				fmt.Println(client)
+			for client := range pool.Clients {				
 				client.Conn.WriteJSON(Message{Type: 1,Body: "User Left"})
 				break
 			}
