@@ -19,7 +19,7 @@ func Authtication() mux.MiddlewareFunc {
             session, _ := store.Get(r,"super-secret-key")
             
             // Allow certain URL Path
-            if strings.Split(r.URL.Path,"/")[1] == "login" || strings.Split(r.URL.Path,"/")[1] == "register" || strings.Split(r.URL.Path,"/")[1] == "logout"{
+            if strings.Split(r.URL.Path,"/")[1] == "home" || strings.Split(r.URL.Path,"/")[1] == "login" || strings.Split(r.URL.Path,"/")[1] == "register" || strings.Split(r.URL.Path,"/")[1] == "logout"{
                 h.ServeHTTP(w, r)
             }
             

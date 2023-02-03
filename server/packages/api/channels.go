@@ -1,7 +1,6 @@
 package api
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/open-ai/server/packages/utils"
@@ -9,7 +8,8 @@ import (
 
 func (s *Server) GetAllChannels(w http.ResponseWriter, r *http.Request) error {
 	
-	log.Println("Hello World")
+	http.FileServer(http.Dir("../../static/index.html"))
+
 	return utils.WriteJSON(w,http.StatusOK,"Hello World")
 }
 
