@@ -7,8 +7,6 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-
-	"github.com/open-ai/server/packages/utils"
 )
 
 // Checking if user is logged in
@@ -16,22 +14,23 @@ func Authtication() mux.MiddlewareFunc {
 
     return func(h http.Handler) http.Handler {
         return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-      
+
+            // Get session
             session, _ := store.Get(r,"super-secret-key")
-        
-            _, ok := session.Values["super-secret-key"]
+            
+            // Allow certain URL Path
             if strings.Split(r.URL.Path,"/")[1] == "login" || strings.Split(r.URL.Path,"/")[1] == "register" || strings.Split(r.URL.Path,"/")[1] == "logout"{
                 h.ServeHTTP(w, r)
             }
             
-            if !ok {
-                http.Redirect(w,r,"/login",http.StatusAccepted)
-                utils.WriteJSON(w, http.StatusUnauthorized, APIError{Err :"Unauthorized",Status: http.StatusUnauthorized})
+            // Check if user is authenticated
+            if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
+                http.Error(w, "Forbidden", http.StatusForbidden)
+                return
+            }else {
+                h.ServeHTTP(w, r)
             }
-            if session.Values["authenticated"] == false {
-                http.Redirect(w,r,"/login",http.StatusAccepted)
-		        utils.WriteJSON(w, http.StatusUnauthorized, APIError{Err :"Unauthorized",Status: http.StatusUnauthorized})
-            }
+          
         })
     }
 }
