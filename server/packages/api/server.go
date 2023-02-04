@@ -30,12 +30,15 @@ func (s *Server) StartServer() error {
 	router.HandleFunc("/login",HTTPHandler(s.LoginUser)).Methods("POST")
 	router.HandleFunc("/logout",HTTPHandler(s.Logout)).Methods("POST")
 	
-	// Messages Routes
 	// Channels Routes
-	router.HandleFunc("/home",s.GetAllChannels).Methods("GET")
+	router.HandleFunc("/create-channel",HTTPHandler(s.CreateChannel)).Methods("POST")
+	router.HandleFunc("/join-channel",HTTPHandler(s.JoinChannel)).Methods("POST")
+
+	// Messages Routes
 	router.HandleFunc("/ws",func(w http.ResponseWriter, r *http.Request) {
 		ServeWS(pool,w,r)
 	})
+
 	log.Println("Server running on port:",s.Address)
 	return http.ListenAndServe(s.Address,router)
 }

@@ -22,6 +22,10 @@ func ConnectToDB() (db *sql.DB)  {
 		log.Fatalf("Failed to ping: %v", err)
     }
 
+    if err != nil {
+        panic(err)
+    }
+	
     log.Println("Successfully connected")
 
 	return db
