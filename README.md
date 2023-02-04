@@ -1,7 +1,8 @@
 # Chat App using Golang
 
 A CRUD app that allows user's to post, update delete posts.
-<!-- 
+
+<!--
 ## Demo
 
 Live Preview
@@ -10,7 +11,7 @@ Live Preview
 
 ## Tech Stack
 
-<!-- **Client:** Next JS and Chakra UI -->
+**Client:** Next JS and Material UI
 
 **Server:** Golang and MySQL
 
@@ -27,7 +28,7 @@ Go to the project directory
 ```bash
   cd Chat-App
 ```
-<!-- 
+
 ## For Client Side
 
 ```bash
@@ -37,14 +38,14 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  yarn install
+  npm install
 ```
 
 Run
 
 ```bash
-  yarn run dev
-``` -->
+  npm run dev
+```
 
 ## For Server Side
 

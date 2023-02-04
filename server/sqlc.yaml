@@ -4,7 +4,7 @@ packages:
      name: "db"
      path: "./packages/db/SQL"
      queries: "./packages/db/query/users.sql"
-     schema: "./packages/db/schema/user_schema.sql"
+     schema: "./packages/db/schema/init_schema.sql"
      emit_json_tags: true
      emit_prepared_queries: false
      emit_exact_table_names: true

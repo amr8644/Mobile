@@ -8,6 +8,19 @@ import (
 	"database/sql"
 )
 
+type ChanelUser struct {
+	ID       int32         `json:"id"`
+	UserID   sql.NullInt32 `json:"user_id"`
+	ChanelID sql.NullInt32 `json:"chanel_id"`
+}
+
+type Channels struct {
+	ID        int32          `json:"id"`
+	Name      sql.NullString `json:"name"`
+	CreatedBy sql.NullInt32  `json:"created_by"`
+	CreatedAt sql.NullTime   `json:"created_at"`
+}
+
 type Users struct {
 	ID        int32          `json:"id"`
 	Email     sql.NullString `json:"email"`
