@@ -1,5 +1,8 @@
-server:
+run:
 	cd cmd && go run main.go
+
+build:
+	cd cmd && go install main.go
 	
 migrateup:
 	migrate -path packages/db/schema -database "mysql://root:80aLOv9gIY0UIZrVXM3d@tcp(containers-us-west-155.railway.app:5443)/railway" -verbose up

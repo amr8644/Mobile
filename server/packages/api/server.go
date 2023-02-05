@@ -20,8 +20,8 @@ func NewServer(Address string) *Server {
 func (s *Server) StartServer() error {
 
 	router := mux.NewRouter()
-	pool := NewPool()
-	go pool.Start()
+	// pool := NewPool()
+	// go pool.Start()
 	
 	// Auth routes
 	router.Use(Logging())
@@ -36,7 +36,7 @@ func (s *Server) StartServer() error {
 
 	// Messages Routes
 	router.HandleFunc("/ws",func(w http.ResponseWriter, r *http.Request) {
-		ServeWS(pool,w,r)
+		WSEndpoint(w,r)
 	})
 
 	log.Println("Server running on port:",s.Address)
