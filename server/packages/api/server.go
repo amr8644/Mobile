@@ -20,8 +20,6 @@ func NewServer(Address string) *Server {
 func (s *Server) StartServer() error {
 
 	router := mux.NewRouter()
-	// pool := NewPool()
-	// go pool.Start()
 	
 	// Auth routes
 	router.Use(Logging())
@@ -35,8 +33,10 @@ func (s *Server) StartServer() error {
 	router.HandleFunc("/join-channel",HTTPHandler(s.JoinChannel)).Methods("POST")
 
 	// Messages Routes
-	router.HandleFunc("/ws",func(w http.ResponseWriter, r *http.Request) {
-		WSEndpoint(w,r)
+	io := Socket()
+	router.HandleFunc("/socket.io/",func(w http.ResponseWriter, r *http.Request) {
+		(w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		io.ServeHTTP(w,r)
 	})
 
 	log.Println("Server running on port:",s.Address)

@@ -4,18 +4,20 @@ import React from "react";
 import { io } from "socket.io-client";
 
 export default function Home() {
-   const [message, setMessage] = React.useState("");
-   const socket = io("http://localhost:8000/ws", {
-      withCredentials: true,
-      extraHeaders: {
-         "my-custom-header": "abcd",
-      },
+   const [text, setMessage] = React.useState("");
+   const socket = io("http://localhost:8000/socket.io/", {
+      withCredentials: false,
    });
 
-   const sendMessage = async (params: any) => {
+   socket.emit("global message", "Hello World");
+   socket.on("some:event", function (msg) {
+      console.log(msg);
+   });
+   const sendMessage = async () => {
       try {
          // send a message to the server
-         socket.emit(message, 5, "6", { 7: Uint8Array.from([8]) });
+         // socket.
+         // console.log(text);
       } catch (error: any) {
          console.log(error);
       }
