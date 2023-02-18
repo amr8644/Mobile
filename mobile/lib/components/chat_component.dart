@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/pages/chat_detail.dart';
+
 // ignore: must_be_immutable
 class ChatListComponent extends StatefulWidget {
   String text;
@@ -21,41 +23,48 @@ class ChatListComponent extends StatefulWidget {
 class _ChatListComponentState extends State<ChatListComponent> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding:
-            const EdgeInsets.only(top: 10, bottom: 10, left: 16, right: 16),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage: AssetImage(widget.image),
-                    maxRadius: 30,
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(widget.text),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      Text(widget.secondanry,
-                          style: TextStyle(
-                              fontSize: 14, color: Colors.grey.shade500))
-                    ],
-                  ),
-                ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const ChatDetailPage();
+        }));
+      },
+      child: Container(
+          padding:
+              const EdgeInsets.only(top: 10, bottom: 10, left: 16, right: 16),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Row(
+                  children: <Widget>[
+                    CircleAvatar(
+                      backgroundImage: AssetImage(widget.image),
+                      maxRadius: 30,
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(widget.text),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Text(widget.secondanry,
+                            style: TextStyle(
+                                fontSize: 14, color: Colors.grey.shade500))
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Text(
-              widget.time,
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
-            ),
-          ],
-        ));
+              Text(
+                widget.time,
+                style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+              ),
+            ],
+          )),
+    );
   }
 }

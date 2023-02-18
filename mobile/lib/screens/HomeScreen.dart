@@ -8,15 +8,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   shadowColor: Colors.white,
-      //   backgroundColor: Colors.white,
-      //   automaticallyImplyLeading: false,
-      //   title: const Text(
-      //     "Chats",
-      //     style: TextStyle(color: Colors.black),
-      //   ),
-      // ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey.shade500,
@@ -32,7 +23,7 @@ class HomeScreen extends StatelessWidget {
               icon: Icon(Icons.account_circle), label: "profile")
         ],
       ),
-      body: ChatPage(),
+      body: const ChatPage(),
     );
   }
 }
