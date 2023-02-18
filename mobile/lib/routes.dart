@@ -1,4 +1,4 @@
-import 'package:flut/screens/Login.dart';
+import 'package:flut/screens/LoginScreen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {

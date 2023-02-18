@@ -1,9 +1,9 @@
 import 'package:flut/colors.dart';
 import 'package:flut/routes.dart';
-import 'package:flut/screens/Login.dart';
+import 'package:flut/screens/LoginScreen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   runApp(App());
 }
 
