@@ -1,10 +1,10 @@
 -- name: CreateUser :execresult
-INSERT INTO users (
+INSERT INTO user (
   username, email, password
 ) VALUES (
    ?, ?, ?
 );
 
 -- name: LoginUser :one
-SELECT * FROM users
+SELECT * FROM user
 WHERE username = ?;

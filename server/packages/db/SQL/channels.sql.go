@@ -11,7 +11,7 @@ import (
 )
 
 const createChannel = `-- name: CreateChannel :execresult
-INSERT INTO channels (
+INSERT INTO channel (
   name, created_by
 ) VALUES (
    ?, ?

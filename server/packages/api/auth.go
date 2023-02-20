@@ -28,7 +28,7 @@ type User struct {
 func (s *Server) RegisterUser(w http.ResponseWriter, r *http.Request) error {
 
 	// Create a new User struct
-	var u db.Users
+	var u db.User
 	quries := db.New(conn.ConnectToDB())
 	
 	// Decode the request body then put it inside the struct

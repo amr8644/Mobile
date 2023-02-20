@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `user` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `email` varchar(255),
   `username` varchar(255),
@@ -6,33 +6,33 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` timestamp
 );
 
-CREATE TABLE IF NOT EXISTS `channels` (
+CREATE TABLE `channel` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
   `created_by` int,
   `created_at` timestamp
 );
 
-CREATE TABLE IF NOT EXISTS `channel_user` (
+CREATE TABLE `channel_user` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int,
   `channel_id` int
 );
 
-CREATE TABLE if NOT EXISTS `messages` (
+CREATE TABLE `messages` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int,
   `channel_id` int,
-  `message` varchar(255),
+  `messages` varchar(255),
   `created_at` timestamp
 );
 
-ALTER TABLE `channels` ADD FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
+ALTER TABLE `channel` ADD FOREIGN KEY (`created_by`) REFERENCES `user` (`id`);
 
-ALTER TABLE `channel_user` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `channel_user` ADD FOREIGN KEY (`channel_id`) REFERENCES `channel` (`id`);
 
-ALTER TABLE `channel_user` ADD FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`);
+ALTER TABLE `channel_user` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
-ALTER TABLE `messages` ADD FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`);
+ALTER TABLE `messages` ADD FOREIGN KEY (`channel_id`) REFERENCES `channel` (`id`);
 
-ALTER TABLE `messages` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `messages` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);

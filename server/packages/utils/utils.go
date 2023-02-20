@@ -23,6 +23,9 @@ type APIFunc func(http.ResponseWriter,* http.Request) error
 func WriteJSON(w http.ResponseWriter, status int , v any) error  {
 	w.WriteHeader(status)
 	w.Header().Add("Content-Type","application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "exp://192.168.1.106:19000")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods","GET")
+
 	return json.NewEncoder(w).Encode(v)
 }

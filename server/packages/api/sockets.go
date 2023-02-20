@@ -14,14 +14,16 @@ var upgrader  = websocket.Upgrader{
 
 func Reader(conn *websocket.Conn){
 	for {
-		message_typ ,p,err := conn.ReadMessage()
-		
+		message_typ ,p,err := conn.ReadMessage()		
 		who := conn.LocalAddr()
 		if err != nil {
 			log.Println(err)
 			return
 		}
+
+		AddMessage(string(p))
 		log.Println(who ,": ",string(p))
+		
 		if err := conn.WriteMessage(message_typ,p); err != nil {
 			log.Println(err)
 			return

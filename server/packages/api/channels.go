@@ -15,7 +15,7 @@ import (
 
 func (s *Server) CreateChannel(w http.ResponseWriter, r *http.Request) error {
 
-	var c db.Channels
+	var c db.Channel
 	quries := db.New(conn.ConnectToDB())
 	
 	// Decode the request body then put it inside the struct

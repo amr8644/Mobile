@@ -11,7 +11,7 @@ import (
 )
 
 const createUser = `-- name: CreateUser :execresult
-INSERT INTO users (
+INSERT INTO user (
   username, email, password
 ) VALUES (
    ?, ?, ?
@@ -29,13 +29,13 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (sql.Res
 }
 
 const loginUser = `-- name: LoginUser :one
-SELECT id, email, username, password, created_at FROM users
+SELECT id, email, username, password, created_at FROM user
 WHERE username = ?
 `
 
-func (q *Queries) LoginUser(ctx context.Context, username sql.NullString) (Users, error) {
+func (q *Queries) LoginUser(ctx context.Context, username sql.NullString) (User, error) {
 	row := q.db.QueryRowContext(ctx, loginUser, username)
-	var i Users
+	var i User
 	err := row.Scan(
 		&i.ID,
 		&i.Email,

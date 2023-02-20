@@ -1,5 +1,5 @@
 -- name: CreateChannel :execresult
-INSERT INTO channels (
+INSERT INTO channel (
   name, created_by
 ) VALUES (
    ?, ?

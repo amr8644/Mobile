@@ -34,6 +34,8 @@ func (s *Server) StartServer() error {
 
 	// Messages Routes
 	router.HandleFunc("/ws",Socket)
+	router.HandleFunc("/get-msg",HTTPHandler(s.GetMessages)).Methods("GET")
+
 	log.Println("Server running on port:",s.Address)
 	return http.ListenAndServe(s.Address,router)
 }

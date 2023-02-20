@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import "./index.css";
 
 function App() {
@@ -18,6 +19,29 @@ function App() {
          console.log("Error: ", error);
       };
    };
+
+   const getMessage = async () => {
+      try {
+         const response = await axios.get("http://localhost:8000/get-msg", {
+            withCredentials: true,
+            headers: {
+               "Access-Control-Allow-Origin": "*",
+               "Access-Control-Allow-Methods":
+                  "GET",
+            },
+         });
+
+         // const data = await response.json();
+         console.log(response);
+         return response;
+      } catch (error) {
+         console.log("====================================");
+         console.log(error);
+         console.log("====================================");
+      }
+   };
+
+   getMessage();
 
    return (
       <>
