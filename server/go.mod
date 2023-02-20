@@ -14,6 +14,6 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/googollee/go-socket.io v1.6.3
 	github.com/gorilla/sessions v1.2.1
-	github.com/gorilla/websocket v1.4.2
+	github.com/gorilla/websocket v1.5.0
 	golang.org/x/crypto v0.5.0
 )

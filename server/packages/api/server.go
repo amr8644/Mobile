@@ -33,12 +33,7 @@ func (s *Server) StartServer() error {
 	router.HandleFunc("/join-channel",HTTPHandler(s.JoinChannel)).Methods("POST")
 
 	// Messages Routes
-	io := Socket()
-	router.HandleFunc("/socket.io/",func(w http.ResponseWriter, r *http.Request) {
-		(w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-		io.ServeHTTP(w,r)
-	})
-
+	router.HandleFunc("/ws",Socket)
 	log.Println("Server running on port:",s.Address)
 	return http.ListenAndServe(s.Address,router)
 }

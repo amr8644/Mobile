@@ -22,9 +22,11 @@ type Channels struct {
 }
 
 type Messages struct {
-	ID        int32         `json:"id"`
-	UserID    sql.NullInt32 `json:"user_id"`
-	ChannelID sql.NullInt32 `json:"channel_id"`
+	ID        int32          `json:"id"`
+	UserID    sql.NullInt32  `json:"user_id"`
+	ChannelID sql.NullInt32  `json:"channel_id"`
+	Message   sql.NullString `json:"message"`
+	CreatedAt sql.NullTime   `json:"created_at"`
 }
 
 type Users struct {

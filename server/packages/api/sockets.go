@@ -2,30 +2,39 @@ package api
 
 import (
 	"log"
+	"net/http"
 
-	socketio "github.com/googollee/go-socket.io"
+	"github.com/gorilla/websocket"
 )
 
+var upgrader  = websocket.Upgrader{
+	ReadBufferSize: 1024,
+	WriteBufferSize: 1024,
+}
 
-func Socket() *socketio.Server  {
-	server := socketio.NewServer(nil)
-	
-	server.OnConnect("/", func(s socketio.Conn) error {
-		s.SetContext("")
-		log.Println("Connected:", s.ID())
-		s.Join("bcast")
-		return nil
-	})
+func Reader(conn *websocket.Conn){
+	for {
+		message_typ ,p,err := conn.ReadMessage()
+		
+		who := conn.LocalAddr()
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		log.Println(who ,": ",string(p))
+		if err := conn.WriteMessage(message_typ,p); err != nil {
+			log.Println(err)
+			return
+		}
+	}
+}
 
-	server.OnEvent("/","global message",func(s socketio.Conn, msg string) {
-		log.Println(msg)
-	})
-	server.BroadcastToRoom("", "bcast", "event:name", "Hello World")
+func Socket(w http.ResponseWriter, r *http.Request) {
 
-	server.OnDisconnect("/", func(s socketio.Conn, reason string) {
-		log.Println("Closed", reason)
-	})
-
-	go server.Serve()
-	return server
+	upgrader.CheckOrigin = func(r *http.Request) bool {return true}
+	ws,err := upgrader.Upgrade(w,r,nil)
+	if err != nil {
+		log.Println(err)
+	}
+	Reader(ws)
 }

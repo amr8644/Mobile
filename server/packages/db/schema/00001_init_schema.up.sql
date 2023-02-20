@@ -22,7 +22,9 @@ CREATE TABLE IF NOT EXISTS `channel_user` (
 CREATE TABLE if NOT EXISTS `messages` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int,
-  `channel_id` int
+  `channel_id` int,
+  `message` varchar(255),
+  `created_at` timestamp
 );
 
 ALTER TABLE `channels` ADD FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
