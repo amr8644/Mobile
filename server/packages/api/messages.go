@@ -14,6 +14,7 @@ import (
 
 func AddMessage(message string) {
 	quries := db.New(conn.ConnectToDB())
+	
 	msg, err := quries.SendMessage(context.Background(), db.SendMessageParams{
 		UserID:    sql.NullInt32{Int32: 1, Valid: true},
 		ChannelID: sql.NullInt32{Int32: 1, Valid: true},
@@ -37,11 +38,10 @@ func (s *Server) GetMessages(w http.ResponseWriter, r *http.Request) error {
 		Valid: true,
 	})
 
-	fmt.Println(msg)
-
 	if err != nil {
 		log.Println(APIError{Err: err.Error(),Status: http.StatusNotFound })
 		return utils.WriteJSON(w, http.StatusUnauthorized,APIError{Err: err.Error(),Status: http.StatusUnauthorized })
 	}
+	
 	return utils.WriteJSON(w,http.StatusOK,msg)
 }

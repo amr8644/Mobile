@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
-import "./index.css";
+import { GetServerSideProps } from "next";
+import Card from "@/components/Card";
 
-function App() {
+function Home({ messages }: any) {
    const [message, setMessage] = useState("");
-
    const handleSubmit = (e: any) => {
       e.preventDefault();
       let socket = new WebSocket("ws://localhost:8000/ws");
@@ -20,31 +20,9 @@ function App() {
       };
    };
 
-   const getMessage = async () => {
-      try {
-         const response = await axios.get("http://localhost:8000/get-msg", {
-            withCredentials: true,
-            headers: {
-               "Access-Control-Allow-Origin": "*",
-               "Access-Control-Allow-Methods":
-                  "GET",
-            },
-         });
-
-         // const data = await response.json();
-         console.log(response);
-         return response;
-      } catch (error) {
-         console.log("====================================");
-         console.log(error);
-         console.log("====================================");
-      }
-   };
-
-   getMessage();
-
    return (
       <>
+         <Card messages={messages} />
          <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-md space-y-8">
                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -83,4 +61,17 @@ function App() {
    );
 }
 
-export default App;
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+   const response = await axios.get("http://localhost:8000/get-msg", {
+      headers: {
+         "Access-Control-Allow-Origin": "*",
+      },
+   });
+
+   return {
+      props: {
+         messages: response.data,
+      },
+   };
+};
+export default Home;
