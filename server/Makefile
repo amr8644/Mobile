@@ -5,10 +5,10 @@ build:
 	cd cmd && go install main.go
 	
 migrateup:
-	migrate -path packages/db/schema -database "mysql://root:80aLOv9gIY0UIZrVXM3d@tcp(containers-us-west-155.railway.app:5443)/railway" -verbose up
+	migrate -path packages/db/schema -database "mysql://t8bljo0072iz4ci3gghe:pscale_pw_jCzleg9vbfD82pRRadacRuoyMHBG33phzrtDoaXt1qF@tcp(ap-south.connect.psdb.cloud)/chat?tls=true" -verbose up
 
 migratedown:
-	migrate -path packages/db/schema -database "mysql://root:80aLOv9gIY0UIZrVXM3d@tcp(containers-us-west-155.railway.app:5443)/railway" -verbose drop 
+	migrate -path packages/db/schema -database "mysql://t8bljo0072iz4ci3gghe:pscale_pw_jCzleg9vbfD82pRRadacRuoyMHBG33phzrtDoaXt1qF@tcp(ap-south.connect.psdb.cloud)/chat?tls=true" -verbose drop 
 
 generate:
 	.\sqlc.exe generate

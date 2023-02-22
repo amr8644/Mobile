@@ -9,10 +9,12 @@ import (
 
 
 func ConnectToDB() (db *sql.DB)  {
+    
 	log.Println("Connecting to MySQL DB...")
 	
-	connstr := "root:80aLOv9gIY0UIZrVXM3d@tcp(containers-us-west-155.railway.app:5443)/railway"
-	db, err := sql.Open("mysql", connstr)
+	DSN :="t8bljo0072iz4ci3gghe:pscale_pw_jCzleg9vbfD82pRRadacRuoyMHBG33phzrtDoaXt1qF@tcp(ap-south.connect.psdb.cloud)/chat?tls=true"
+
+	db, err := sql.Open("mysql", DSN)
 
     if err != nil {
         log.Fatalf("failed to connect: %v", err)

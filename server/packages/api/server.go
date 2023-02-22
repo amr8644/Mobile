@@ -33,7 +33,12 @@ func (s *Server) StartServer() error {
 	router.HandleFunc("/join-channel",HTTPHandler(s.JoinChannel)).Methods("POST")
 
 	// Messages Routes
-	router.HandleFunc("/ws",Socket)
+	// pool := NewPool()
+    // go pool.Start()
+
+	// router.HandleFunc("/ws",func(w http.ResponseWriter, r *http.Request) {
+	// 	serveWs(pool, w, r)
+	// })
 	router.HandleFunc("/get-msg",HTTPHandler(s.GetMessages)).Methods("GET")
 
 	log.Println("Server running on port:",s.Address)
