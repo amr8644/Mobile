@@ -24,7 +24,6 @@ func WriteJSON(w http.ResponseWriter, status int , v any) error  {
 	w.WriteHeader(status)
 	w.Header().Add("Content-Type","application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000/")
-	// w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods","*")
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 

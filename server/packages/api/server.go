@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"golang.org/x/net/websocket"
 )
 
 type Server struct {
@@ -20,27 +21,23 @@ func NewServer(Address string) *Server {
 func (s *Server) StartServer() error {
 
 	router := mux.NewRouter()
-	
+	io := NewSockets()
+
 	// Auth routes
 	router.Use(Logging())
 	// router.Use(Authtication())
-	router.HandleFunc("/register",HTTPHandler(s.RegisterUser)).Methods("POST")
-	router.HandleFunc("/login",HTTPHandler(s.LoginUser)).Methods("POST")
-	router.HandleFunc("/logout",HTTPHandler(s.Logout)).Methods("POST")
-	
-	// Channels Routes
-	router.HandleFunc("/create-channel",HTTPHandler(s.CreateChannel)).Methods("POST")
-	router.HandleFunc("/join-channel",HTTPHandler(s.JoinChannel)).Methods("POST")
+	router.HandleFunc("/register", HTTPHandler(s.RegisterUser)).Methods("POST")
+	router.HandleFunc("/login", HTTPHandler(s.LoginUser)).Methods("POST")
+	router.HandleFunc("/logout", HTTPHandler(s.Logout)).Methods("POST")
 
 	// Messages Routes
-	// pool := NewPool()
-    // go pool.Start()
 
-	// router.HandleFunc("/ws",func(w http.ResponseWriter, r *http.Request) {
-	// 	serveWs(pool, w, r)
-	// })
-	router.HandleFunc("/get-msg",HTTPHandler(s.GetMessages)).Methods("GET")
+	// router.HandleFunc("/ws", HTTPHandler(websocket.Handler(io.Socket)))
+	// http.Handle("/ws", websocket.Handler(io.Socket))
+	router.Handle("/ws", websocket.Handler(io.Socket))
 
-	log.Println("Server running on port:",s.Address)
-	return http.ListenAndServe(s.Address,router)
+	router.HandleFunc("/get-msg", HTTPHandler(s.GetMessages)).Methods("GET")
+
+	log.Println("Server running on port:", s.Address)
+	return http.ListenAndServe(s.Address, router)
 }
