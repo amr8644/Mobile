@@ -1,5 +1,0 @@
-*.exe
-.env
-sqlc.exe
-/static
-sqlc.exe
